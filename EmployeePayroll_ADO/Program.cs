@@ -8,7 +8,7 @@ namespace EmployeePayroll_ADO
         {
             EmployeeRepo getMethod = new EmployeeRepo();
             EmployeePayroll_Model model = new EmployeePayroll_Model();
-            Console.WriteLine("1 to Check SQL Connectivity\n2 to Add Data to DB\n3 to view DB\n4 to Update DB" +
+            Console.WriteLine("1 to Check SQL Connectivity\n2 to Add Data to DB\n3 to view DB\n4 to Update DB\n5 to Delete Data from Table" +
                 "\nEnter a Number");
             int userInput = Convert.ToInt32(Console.ReadLine());
 
@@ -54,6 +54,11 @@ namespace EmployeePayroll_ADO
                 case 4:
                     {
                         getMethod.UpdateTable();
+                        break;
+                    }
+                case 5:
+                    {
+                        getMethod.DeleteData();
                         break;
                     }
                 default:
