@@ -11,18 +11,18 @@ namespace EmployeePayroll_ADO
     public class EmployeeRepo
     {
         public static string connectionString = "Data Source = (localdb)\\MSSQLLOCALDB;Initial Catalog = PAYROLL_SERVICE;";
-        SqlConnection connection = new SqlConnection(connectionString);
         public DataSet Connectivity()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
                 DataSet data = new DataSet();
-                using (this.connection)
+                using (connection)
                 {
-                    this.connection.Open();
-                    SqlDataAdapter adapter = new SqlDataAdapter("ConnectivityCheck", this.connection);
+                    connection.Open();
+                    SqlDataAdapter adapter = new SqlDataAdapter("ConnectivityCheck", connection);
                     adapter.Fill(data);
-                    this.connection.Close();
+                    connection.Close();
                     Console.WriteLine("Connection Established");
                     return data;
                 }
@@ -33,20 +33,21 @@ namespace EmployeePayroll_ADO
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
         public void GetAllEmployee()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
                 EmployeePayroll_Model model = new EmployeePayroll_Model();
-                using (this.connection)
+                using (connection)
                 {
                     string query = @"SELECT ID,NAME,SALARY,START_DATE,GENDER,MOBILE,ADDRESS,DEPARTMENT,BASIC_PAY,DEDUCTIONS,TAXABLE_PAY,NET_PAY
                                 FROM EMPLOYEE_PAYROLL;";
                     SqlCommand cmd = new SqlCommand(query, connection);
-                    this.connection.Open();
+                    connection.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if (reader.HasRows)
@@ -76,7 +77,7 @@ namespace EmployeePayroll_ADO
                         Console.WriteLine("No Data Found");
                     }
                     reader.Close();
-                    this.connection.Close();
+                    connection.Close();
                 }
             }
             catch (Exception ex)
@@ -85,16 +86,17 @@ namespace EmployeePayroll_ADO
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
         public bool AddEmployee(EmployeePayroll_Model model)
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
-                    SqlCommand command = new SqlCommand("SpAddEmployeeDetails", this.connection);
+                    SqlCommand command = new SqlCommand("SpAddEmployeeDetails", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@NAME", model.name);
                     command.Parameters.AddWithValue("@SALARY", model.salary);
@@ -107,9 +109,9 @@ namespace EmployeePayroll_ADO
                     command.Parameters.AddWithValue("@DEDUCTIONS", model.deductions);
                     command.Parameters.AddWithValue("@TAXABLE_PAY", model.taxablePay);
                     command.Parameters.AddWithValue("@NET_PAY", model.netPay);
-                    this.connection.Open();
+                    connection.Open();
                     var result = command.ExecuteNonQuery();
-                    this.connection.Close();
+                    connection.Close();
                     if (result != 0)
                     {
                         return true;
@@ -123,26 +125,27 @@ namespace EmployeePayroll_ADO
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
         public void UpdateTable()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using(this.connection)
+                using(connection)
                 {
                     Console.WriteLine("Enter a Name");
                     string name = Console.ReadLine();
                     Console.WriteLine("Enter Salary to Update");
                     double salary = Convert.ToDouble(Console.ReadLine());
-                    SqlCommand command = new SqlCommand("UpdateEmployee_Payroll", this.connection);
+                    SqlCommand command = new SqlCommand("UpdateEmployee_Payroll", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@NAME", name);
                     command.Parameters.AddWithValue("@BASIC_PAY", salary);
-                    this.connection.Open();
+                    connection.Open();
                     command.ExecuteNonQuery();
-                    this.connection.Close();
+                    connection.Close();
                 }
             }
             catch (Exception ex)
@@ -151,23 +154,24 @@ namespace EmployeePayroll_ADO
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
         public void DeleteData()
         {
+            SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                using (this.connection)
+                using (connection)
                 {
                     Console.WriteLine("Enter a Name");
                     string name = Console.ReadLine();
-                    SqlCommand command = new SqlCommand("DeleteEmployee_Payroll", this.connection);
+                    SqlCommand command = new SqlCommand("DeleteEmployee_Payroll", connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@NAME", name);
-                    this.connection.Open();
+                    connection.Open();
                     command.ExecuteNonQuery();
-                    this.connection.Close();
+                    connection.Close();
                 }
             }
             catch (Exception ex)
@@ -176,7 +180,7 @@ namespace EmployeePayroll_ADO
             }
             finally
             {
-                this.connection.Close();
+                connection.Close();
             }
         }
     }
