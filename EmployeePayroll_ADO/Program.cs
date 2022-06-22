@@ -8,7 +8,8 @@ namespace EmployeePayroll_ADO
         {
             EmployeeRepo getMethod = new EmployeeRepo();
             EmployeePayroll_Model model = new EmployeePayroll_Model();
-            Console.WriteLine("1 to Check SQL Connectivity\n2 to Add Data to DB\n3 to view DB\nEnter a Number");
+            Console.WriteLine("1 to Check SQL Connectivity\n2 to Add Data to DB\n3 to view DB\n4 to Update DB" +
+                "\nEnter a Number");
             int userInput = Convert.ToInt32(Console.ReadLine());
 
             switch (userInput)
@@ -24,7 +25,8 @@ namespace EmployeePayroll_ADO
                         model.name = Console.ReadLine();
                         Console.WriteLine("Enter Salary");
                         model.salary = Convert.ToDouble(Console.ReadLine());
-                        model.startDate = DateTime.Now;
+                        Console.WriteLine("Enter a Year,Month,Date");
+                        model.startDate = Convert.ToDateTime(Console.ReadLine());
                         Console.WriteLine("Enter Gender");
                         model.gender = Console.ReadLine(); ;
                         Console.WriteLine("Enter Phone Number");
@@ -47,6 +49,11 @@ namespace EmployeePayroll_ADO
                 case 3:
                     {
                         getMethod.GetAllEmployee();
+                        break;
+                    }
+                case 4:
+                    {
+                        getMethod.UpdateTable();
                         break;
                     }
                 default:

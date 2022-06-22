@@ -126,5 +126,33 @@ namespace EmployeePayroll_ADO
                 this.connection.Close();
             }
         }
+        public void UpdateTable()
+        {
+            try
+            {
+                using(this.connection)
+                {
+                    Console.WriteLine("Enter a Name");
+                    string name = Console.ReadLine();
+                    Console.WriteLine("Enter Salary to Update");
+                    double salary = Convert.ToDouble(Console.ReadLine());
+                    SqlCommand command = new SqlCommand("UpdateEmployee_Payroll", this.connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@NAME", name);
+                    command.Parameters.AddWithValue("@BASIC_PAY", salary);
+                    this.connection.Open();
+                    command.ExecuteNonQuery();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
     }
 }
