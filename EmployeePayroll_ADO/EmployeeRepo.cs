@@ -193,5 +193,18 @@ namespace EmployeePayroll_ADO
                 Console.WriteLine("Employees Added " + data.name);
             });
         }
+        public void AddEmployeesWithThreading(List<EmployeePayroll_Model> model)
+        {
+            model.ForEach(data =>
+            {
+                Task thread = new Task(() =>
+                {
+                    Console.WriteLine("Employees being Added");
+                    this.AddEmployee(data);
+                    Console.WriteLine("Employees Added " + data.name);
+                });
+                thread.Start();
+            });
+        }
     }
 }
