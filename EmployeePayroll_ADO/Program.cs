@@ -8,11 +8,10 @@ namespace EmployeePayroll_ADO
         {
             EmployeeRepo getMethod = new EmployeeRepo();
             EmployeePayroll_Model model = new EmployeePayroll_Model(id: 0, name: null, salary: 0, startDate: DateTime.Now, gender: null,
-                    mobile: 0, address: null, department: null, basicPay: 0, deductions: 0, taxablePay: 0, netPay: 0);
+                                        mobile: 0, address: null, department: null, basicPay: 0, deductions: 0, taxablePay: 0, netPay: 0);
             Console.WriteLine("1 to Check SQL Connectivity\n2 to Add Data to DB\n3 to view DB\n4 to Update DB\n5 to Delete Data from Table" +
-                "\nEnter a Number");
+                "\n6 to Demonstrate Thread Synchronization\nEnter a Number");
             int userInput = Convert.ToInt32(Console.ReadLine());
-
             switch (userInput)
             {
                 case 1:
@@ -60,6 +59,17 @@ namespace EmployeePayroll_ADO
                 case 5:
                     {
                         getMethod.DeleteData();
+                        break;
+                    }
+                case 6:
+                    {
+                        List<EmployeePayroll_Model> list = new List<EmployeePayroll_Model>();
+                        list.Add(new EmployeePayroll_Model(id: 0, name: "Thamarai", salary: 20000, startDate: new DateTime(2022, 06, 01), gender: "M", mobile: 9877065432, address: "Tirupur", department: "Developer", basicPay: 20000, deductions: 200, taxablePay: 500, netPay: 19500));
+                        list.Add(new EmployeePayroll_Model(id: 0, name: "Subash", salary: 20000, startDate: new DateTime(2022, 05, 01), gender: "M", mobile: 7123456098, address: "Coimbatore", department: "Developer", basicPay: 20000, deductions: 200, taxablePay: 500, netPay: 19500));
+                        list.Add(new EmployeePayroll_Model(id: 0, name: "Anand", salary: 20000, startDate: new DateTime(2022, 04, 01), gender: "M", mobile: 6543210987, address: "Neyveli", department: "Developer", basicPay: 20000, deductions: 200, taxablePay: 500, netPay: 19500));
+                        list.Add(new EmployeePayroll_Model(id: 0, name: "Guna", salary: 20000, startDate: new DateTime(2022, 03, 01), gender: "M", mobile: 7564321098, address: "Ariyalur", department: "Developer", basicPay: 20000, deductions: 200, taxablePay: 500, netPay: 19500));
+                        list.Add(new EmployeePayroll_Model(id: 0, name: "Prithiv", salary: 20000, startDate: new DateTime(2022, 02, 01), gender: "M", mobile: 8970645321, address: "MettuPalayam", department: "Developer", basicPay: 20000, deductions: 200, taxablePay: 500, netPay: 19500));
+                        getMethod.AddEmployeesWithThreading(list);
                         break;
                     }
                 default:
