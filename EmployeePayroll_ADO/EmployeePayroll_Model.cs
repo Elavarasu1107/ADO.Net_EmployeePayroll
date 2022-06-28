@@ -20,5 +20,21 @@ namespace EmployeePayroll_ADO
         public double deductions { get; set; }
         public double taxablePay { get; set; }
         public double netPay { get; set; }
+        public EmployeePayroll_Model(int id, string name, double salary, DateTime startDate, string gender, decimal mobile, string address, 
+            string department, double basicPay, double deductions, double taxablePay, double netPay)
+        {
+            this.id = id;
+            this.name = name;
+            this.salary = salary;
+            this.startDate = startDate;
+            this.gender = gender;
+            this.mobile = mobile;
+            this.address = address;
+            this.department = department;
+            this.basicPay = basicPay;
+            this.deductions = deductions;
+            this.taxablePay = taxablePay;
+            this.netPay = netPay;
+        }
     }
 }

@@ -7,7 +7,8 @@ namespace EmployeePayroll_ADO
         public static void Main(string[] args)
         {
             EmployeeRepo getMethod = new EmployeeRepo();
-            EmployeePayroll_Model model = new EmployeePayroll_Model();
+            EmployeePayroll_Model model = new EmployeePayroll_Model(id: 0, name: null, salary: 0, startDate: DateTime.Now, gender: null,
+                    mobile: 0, address: null, department: null, basicPay: 0, deductions: 0, taxablePay: 0, netPay: 0);
             Console.WriteLine("1 to Check SQL Connectivity\n2 to Add Data to DB\n3 to view DB\n4 to Update DB\n5 to Delete Data from Table" +
                 "\nEnter a Number");
             int userInput = Convert.ToInt32(Console.ReadLine());

@@ -41,7 +41,8 @@ namespace EmployeePayroll_ADO
             SqlConnection connection = new SqlConnection(connectionString);
             try
             {
-                EmployeePayroll_Model model = new EmployeePayroll_Model();
+                EmployeePayroll_Model model = new EmployeePayroll_Model(id: 0, name: null, salary: 0, startDate: DateTime.Now, gender: null, 
+                    mobile: 0, address: null, department: null, basicPay: 0, deductions: 0, taxablePay: 0, netPay: 0);
                 using (connection)
                 {
                     string query = @"SELECT ID,NAME,SALARY,START_DATE,GENDER,MOBILE,ADDRESS,DEPARTMENT,BASIC_PAY,DEDUCTIONS,TAXABLE_PAY,NET_PAY
@@ -182,6 +183,15 @@ namespace EmployeePayroll_ADO
             {
                 connection.Close();
             }
+        }
+        public void AddMultipleEmployees(List<EmployeePayroll_Model> model)
+        {
+            model.ForEach(data =>
+            {
+                Console.WriteLine("Employees being Added");
+                this.AddEmployee(data);
+                Console.WriteLine("Employees Added " + data.name);
+            });
         }
     }
 }
