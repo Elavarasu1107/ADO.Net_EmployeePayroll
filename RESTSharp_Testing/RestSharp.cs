@@ -50,5 +50,28 @@ namespace RESTSharp_Testing
             Assert.AreEqual("25000", data.salary);
             Console.WriteLine(response.Content);
         }
+        [TestMethod]
+        public void OnPostingMultipleEmployees_SholudAddToJsonServer()
+        {
+            client = new RestClient("http://localhost:4000");
+            //Arrange
+            List<Employee> list = new List<Employee>();
+            list.Add(new Employee { name = "Praveen", salary = "30000" });
+            list.Add(new Employee { name = "Navin", salary = "25000" });
+            list.Add(new Employee { name = "Paul", salary = "30000" });
+            list.ForEach(body =>
+            {
+                RestRequest request = new RestRequest("/employees", Method.Post);
+                request.AddParameter("application/json", body, ParameterType.RequestBody);
+                //Act
+                RestResponse response = client.Execute(request);
+                //Assert
+                Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+                Employee data = JsonConvert.DeserializeObject<Employee>(response.Content);
+                Assert.AreEqual(body.name, data.name);
+                Assert.AreEqual(body.salary, data.salary);
+                Console.WriteLine(response.Content);
+            });
+        }
     }
 }
