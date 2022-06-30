@@ -20,6 +20,7 @@ namespace EmployeePayroll_ADO
         public double deductions { get; set; }
         public double taxablePay { get; set; }
         public double netPay { get; set; }
+
         public EmployeePayroll_Model(int id, string name, double salary, DateTime startDate, string gender, decimal mobile, string address, 
             string department, double basicPay, double deductions, double taxablePay, double netPay)
         {
