@@ -73,5 +73,23 @@ namespace RESTSharp_Testing
                 Console.WriteLine(response.Content);
             });
         }
+        [TestMethod]
+        public void OnUpdatingEmployeeData_ShouldUpdateOnJsonServer()
+        {
+            client = new RestClient("http://localhost:4000");
+            //Arrange
+            RestRequest request = new RestRequest("/employees/6", Method.Put);
+            List<Employee> list = new List<Employee>();
+            Employee body = new Employee { name = "Ansari", salary = "25000" };
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+            //Act
+            RestResponse response = client.Execute(request);
+            //Assert
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Employee data = JsonConvert.DeserializeObject<Employee>(response.Content);
+            Assert.AreEqual("Ansari", data.name);
+            Assert.AreEqual("25000", data.salary);
+            Console.WriteLine(response.Content);
+        }
     }
 }
