@@ -33,5 +33,22 @@ namespace RESTSharp_Testing
                 Console.WriteLine("{0,-5}{1,-15}{2,-10}", data.id, data.name, data.salary);
             }
         }
+        [TestMethod]
+        public void OnPostingEmployeeData_ShouldAddtoJsonServer()
+        {
+            client = new RestClient("http://localhost:4000");
+            //Arrange
+            RestRequest request = new RestRequest("/employees", Method.Post);
+            var body = new Employee { name = "Ravi", salary = "25000" };
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+            //Act
+            RestResponse response = client.Execute(request);
+            //Assert
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Employee data = JsonConvert.DeserializeObject<Employee>(response.Content);
+            Assert.AreEqual("Ravi", data.name);
+            Assert.AreEqual("25000", data.salary);
+            Console.WriteLine(response.Content);
+        }
     }
 }
